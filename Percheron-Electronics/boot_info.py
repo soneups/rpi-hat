@@ -11,7 +11,12 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
 # express or implied.  See the License for the specific language
 # governing permissions and limitations under the License.
+#
 # this file enos.in/hatpe
+#
+# needs to be in the same directory as the EPD module file(s) - eg \gratis\PlatformWithOS\demo
+#
+# create a simple cron reboot task - 'sudo crontab -e' - '@reboot phython /.../gratis/PlatformWithOS/demo/boot_info.py
 
 
 import sys
