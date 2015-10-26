@@ -13,12 +13,15 @@
 # governing permissions and limitations under the License.
 # this file enos.in/hatpe
 
+
 import sys
 import os
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 from EPD import EPD
+import socket
+
 
 WHITE = 1
 BLACK = 0
@@ -45,6 +48,12 @@ if '' == FONT_FILE:
 
 TEXT_FONT_SIZE = 15
 HEADING_FONT_SIZE  = 20
+
+hn = socket.gethostname()
+ip = os.popen('hostname -I').read().strip("\n")
+wai = os.popen('whoami').read().strip("\n")
+
+#print str(wai)+', You are on host: '+str(hn)+ ' ip: '+str(ip)
 
 
 def main(argv):
@@ -73,8 +82,9 @@ def demo(epd):
 
     # text
     draw.text((1, 1), 'RPI: Boot information', fill=BLACK, font=heading_font) #col/row from top left
-    draw.text((40, 20+20), 'IP Address: 192.x.x.x', fill=BLACK, font=text_font) #col/row from top left
-    draw.text((40, 40+20), 'Hostname  : <>', fill=BLACK, font=text_font) #col/row from top left
+    draw.text((20, 20+20), 'IP Address: '+ip, fill=BLACK, font=text_font) #col/row from top left
+    draw.text((20, 40+20), 'Hostname  : '+hn, fill=BLACK, font=text_font) #col/row from top left
+    draw.text((20, 60+20), 'Username  : '+wai, fill=BLACK, font=text_font) #col/row from top left
 
     # display image on the panel
     epd.display(image)
@@ -86,5 +96,3 @@ if "__main__" == __name__:
     if len(sys.argv) < 1:
         sys.exit('usage: {p:s}'.format(p=sys.argv[0]))
     main(sys.argv[1:])
-
-
