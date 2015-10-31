@@ -4,6 +4,7 @@
 # Import Python header files
 import RPi.GPIO as GPIO
 import time
+import urllib
 
 # Set the GPIO naming convention
 GPIO.setmode(GPIO.BCM)
@@ -14,7 +15,8 @@ PinPIR = 17
 print "PIR Module Test (CTRL-C to exit)"
 
 # define the server address for the API call
-HomeAutomationLights = '25oct15'
+HomeAutomationLightsOn = 'http://25oct15/2/1'
+HomeAutomationLightsOff = 'http://25oct15/2/0'
 
 # Set pin as input
 GPIO.setup(PinPIR, GPIO.IN)
@@ -34,11 +36,13 @@ try:
     # If the PIR is triggered
     if Current_State==1 and Previous_State==0:
       print " "+(time.strftime("%H:%M:%S"))+" - Motion detected!"
+      a = urllib.urlopen(HomeAutomationLightsOn)
       # Record previous state
       Previous_State=1
     # If the PIR has returned to ready state
     elif Current_State==0 and Previous_State==1:
       print " "+(time.strftime("%H:%M:%S"))+" - Ready"
+      a = urllib.urlopen(HomeAutomationLightsOff)
       Previous_State=0
     # Wait for 10 milliseconds
     time.sleep(0.01)
